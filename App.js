@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import {Pressable, SafeAreaView, View, Text, FlatList} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  Pressable,
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 
 //Custom Components
 import Title from './components/title/Title';
@@ -145,6 +152,16 @@ const App = () => {
     return data.slice(startIndex, startIndex + pageSize);
   };
 
+  const [screenData, setScreenData] = useState(Dimensions.get('screen'));
+  useEffect(() => {
+    console.log(screenData);
+    //If our window size updates, this event listener will run
+    Dimensions.addEventListener('change', result => {
+      console.log('changed screen data');
+      setScreenData(result.screen);
+    });
+  }, [screenData]);
+
   return (
     // Use the SafeAreaView component to ensure content is displayed within the safe area boundaries of the device
     <SafeAreaView>
@@ -167,7 +184,13 @@ const App = () => {
                 {/* Use View to create a container for message number */}
                 <View style={style.messageNumberContainer}>
                   {/* Use Text to display the number of messages */}
-                  <Text style={style.messageNumber}>2</Text>
+                  <Text
+                    style={[
+                      style.messageNumber,
+                      {fontSize: screenData.height / 140},
+                    ]}>
+                    2
+                  </Text>
                 </View>
               </Pressable>
             </View>
