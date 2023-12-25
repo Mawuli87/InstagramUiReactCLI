@@ -4,9 +4,20 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../screens/home/Home';
 import Profile from '../screens/profile/Profile';
 import {Routes} from './Routes';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // Create a Stack variable using the createStackNavigator function
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const MainMenuNavigation = () => {
+  return (
+    <Drawer.Navigator screenOptions={{header: () => null}}>
+      <Drawer.Screen name={Routes.Home} component={Home} />
+      <Drawer.Screen name={Routes.Profile} component={Profile} />
+    </Drawer.Navigator>
+  );
+};
 
 // Define the MainNavigation component
 const MainNavigation = () => {
@@ -18,9 +29,7 @@ const MainNavigation = () => {
       initialRouteName={'Home'}
       screenOptions={{header: () => null, headerShown: false}}>
       {/* Define the Home screen */}
-      <Stack.Screen name={Routes.Home} component={Home} />
-      {/* Define the Profile screen */}
-      <Stack.Screen name={Routes.Profile} component={Profile} />
+      <Stack.Screen name={'Drawer'} component={MainMenuNavigation} />
     </Stack.Navigator>
   );
 };
